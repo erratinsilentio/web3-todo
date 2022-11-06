@@ -61,6 +61,7 @@ table {
       props.dark &&
       css`
         --bg: #18181b;
+        --font: #ffe4e6;
         --col1: #2b2b50;
         --col2: #27272a;
         --blue: #312e81;
@@ -71,6 +72,7 @@ table {
         props.dark ||
         css`
           --bg: #fda4af;
+          --font: #18181b;
           --col1: #fecdd3;
           --col2: #ffe4e6;
           --blue: #312e81;
@@ -84,8 +86,8 @@ table {
 
 body{
     /* background-color: var(--pall1); */
-    /* font-family: 'Courier New', Courier, monospace; */
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Courier New', Courier, monospace;
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
     margin: 0;
     line-height: 1;
 

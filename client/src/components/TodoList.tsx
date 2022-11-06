@@ -12,6 +12,7 @@ const Container = styled.div`
   );
   border-radius: 10px;
   border: 1px solid var(--peach);
+  color: var(--font);
 `;
 
 export default function TodoList() {
