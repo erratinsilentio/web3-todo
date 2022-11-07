@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import Task from './Task';
 
 const Container = styled.div`
-  width: 50vw;
+  min-width: 50vw;
+  width: auto;
+  max-width: 70vw;
   min-height: 70vh;
   max-height: 80vh;
   background: var(--bg);
@@ -17,6 +19,7 @@ const Container = styled.div`
   color: var(--font);
   padding: 1rem;
   padding-top: 2rem;
+  overflow: hidden;
 
   span {
     font-size: 2rem;
@@ -70,11 +73,12 @@ const Container = styled.div`
   .notepad {
     margin-top: 10px;
     width: 100%;
-    height: 70%;
     border: 0.5px solid var(--peach);
     border-radius: 10px;
     overflow: scroll;
     padding: 1rem;
+    /* height: 50vh; */
+    max-height: 50vh;
   }
 `;
 
@@ -88,12 +92,12 @@ export default function TodoList({ inputChange, addTask, tasks }) {
           placeholder="Your note..."
           onChange={() => inputChange(event)}
         ></input>
-        <button className="add-note" onClick={addTask}>
-          +
-        </button>
+        <button className="add-note" onClick={addTask}></button>
       </section>
       <section className="notepad">
-        <Task />
+        {tasks.map((task) =>
+          task.taskText ? <Task key={task.id}>{task.taskText}</Task> : null,
+        )}
       </section>
     </Container>
   );

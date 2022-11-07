@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import TodoList from '@/components/TodoList';
 import ToggleMode from '@/components/ToggleMode';
 import { GlobalStyles } from '@/styles/GlobalStyles';
-// import TaskAbi from '../../../backend/build/contracts/TaskContract.json';
 import TaskAbi from '../../../backend/artifacts/contracts/TaskContract.sol/TaskContract.json';
 import { taskContractAdress } from '../utils/config';
 import { ethers } from 'ethers';
@@ -86,10 +85,6 @@ const Index = () => {
   const addTask = async (e) => {
     e.preventDefault();
 
-    // let task = {
-    //   taskText: input,
-    // };
-
     let task = input;
 
     try {
@@ -108,7 +103,6 @@ const Index = () => {
         TaskContract.addTask(task)
           .then((res) => {
             setMyTasks([...myTasks, task]);
-            console.log(task);
             console.log('◊ New task added!');
             getAllTasks().then((res) => console.log(res));
           })
@@ -131,7 +125,11 @@ const Index = () => {
       <MainStyles>
         <ToggleMode mode={dark} toggle={toggleMode} />
         {isUserLoggedIn ? (
-          <TodoList tasks={tasks} inputChange={inputChange} addTask={addTask} />
+          <TodoList
+            tasks={myTasks}
+            inputChange={inputChange}
+            addTask={addTask}
+          />
         ) : (
           <ConnectWallet connect={connectWallet} />
         )}
