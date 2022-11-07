@@ -22,6 +22,8 @@ export default function useForm(initial = {}) {
       ...inputs,
       [name]: value,
     });
+
+    console.log(inputs)
   }
 
   function clearForm() {

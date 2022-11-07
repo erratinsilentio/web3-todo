@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
+import "hardhat/console.sol";
+
 
 contract TaskContract {
   event AddTask(address recipient, uint taskId);
@@ -40,7 +42,7 @@ contract TaskContract {
     for (uint i=0; i<counter; i++){
       result[i] = temporary[i];
     }
-
+    console.log("Array length is %s", result.length);
     return result;
   }
 
@@ -56,5 +58,9 @@ contract TaskContract {
           tasks[taskId].isDeleted = true;
           emit DeleteTask(taskId);
         }
+  }
+
+  function clearTasks() external {
+    delete tasks;
   }
 }

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import Task from './Task';
 
 const Container = styled.div`
   width: 50vw;
-  height: 50vh;
+  min-height: 70vh;
+  max-height: 80vh;
   background: var(--bg);
   background: linear-gradient(
     270deg,
@@ -13,12 +15,86 @@ const Container = styled.div`
   border-radius: 10px;
   border: 1px solid var(--peach);
   color: var(--font);
+  padding: 1rem;
+  padding-top: 2rem;
+
+  span {
+    font-size: 2rem;
+    padding-left: 1rem;
+  }
+
+  p {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+
+    filter: brightness(80%);
+  }
+
+  .input-bar {
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  input {
+    width: 88%;
+    height: 5vh;
+    border: 0.5px solid var(--peach);
+    border-radius: 10px;
+    background-color: transparent;
+    color: var(--font);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    &:focus {
+      background-color: var(--bg);
+      outline: 0px;
+    }
+  }
+  .add-note {
+    width: 10%;
+    height: 5vh;
+    border: 0.5px solid var(--peach);
+    border-radius: 10px;
+    background-color: transparent;
+    color: var(--font);
+    cursor: pointer;
+    &:hover {
+      background-color: var(--bg);
+    }
+  }
+
+  .notepad {
+    margin-top: 10px;
+    width: 100%;
+    height: 70%;
+    border: 0.5px solid var(--peach);
+    border-radius: 10px;
+    overflow: scroll;
+    padding: 1rem;
+  }
 `;
 
-export default function TodoList() {
+export default function TodoList({ inputChange, addTask, tasks }) {
   return (
     <Container>
-      <p>hello</p>
+      <span>Welcome, Kacper!</span>
+      <p>◊ Add your notes below!</p>
+      <section className="input-bar">
+        <input
+          placeholder="Your note..."
+          onChange={() => inputChange(event)}
+        ></input>
+        <button className="add-note" onClick={addTask}>
+          +
+        </button>
+      </section>
+      <section className="notepad">
+        <Task />
+      </section>
     </Container>
   );
 }
