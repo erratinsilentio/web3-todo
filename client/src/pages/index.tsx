@@ -23,13 +23,14 @@ const Index = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [update, setUpdate] = useState(true);
   const [myTasks, setMyTasks] = useState([]);
   const [input, setInput] = useState('');
 
   useEffect(() => {
     connectWallet();
     getAllTasks();
-  }, []);
+  }, [update]);
 
   const toggleMode = () => setDark(!dark);
 
@@ -102,9 +103,18 @@ const Index = () => {
 
         TaskContract.addTask(task)
           .then((res) => {
+            /// UPDATE OUR STATE ///
             setMyTasks([...myTasks, task]);
             console.log('◊ New task added!');
+            /// REFETCH ALL TASKS AND TRIGGER DATA REFRESH ///
+            getAllTasks();
+            setTimeout(() => {
+              setUpdate(!update);
+            }, 15000);
             getAllTasks().then((res) => console.log(res));
+          })
+          .then((res) => {
+            setUpdate(!update);
           })
           .catch((err) => console.log(err));
       } else {
