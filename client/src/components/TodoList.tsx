@@ -92,7 +92,9 @@ export default function TodoList({ inputChange, addTask, tasks }) {
           placeholder="Your note..."
           onChange={() => inputChange(event)}
         ></input>
-        <button className="add-note" onClick={addTask}></button>
+        <button className="add-note" onClick={addTask}>
+          +
+        </button>
       </section>
       <section className="notepad">
         {tasks.map((task) =>
