@@ -73,8 +73,9 @@ const Index = () => {
         );
 
         let allTasks = await TaskContract.getMyTasks();
-        setMyTasks(allTasks);
-        console.log(allTasks);
+        const res = await allTasks;
+        setMyTasks(res);
+        console.log('tasks:', allTasks);
       } else {
         console.log('◊ ERROR! Ethereum object does not exist!');
       }
@@ -104,7 +105,7 @@ const Index = () => {
         TaskContract.addTask(task)
           .then((res) => {
             /// UPDATE OUR STATE ///
-            setMyTasks([...myTasks, task]);
+            setMyTasks(myTasks.concat(task));
             console.log('◊ New task added!');
             /// REFETCH ALL TASKS AND TRIGGER DATA REFRESH ///
             getAllTasks();
@@ -129,6 +130,35 @@ const Index = () => {
     setInput(e.target.value);
   };
 
+  const toggleImportance = async (task) => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        const TaskContract = new ethers.Contract(
+          taskContractAdress,
+          TaskAbi.abi,
+          signer,
+        );
+
+        console.log('task received');
+
+        task.isImportant
+          ? await TaskContract.makeUnImportant(task.id, false)
+          : await TaskContract.makeImportant(task.id, true);
+
+        console.log('importance changed');
+      }
+
+      await getAllTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <GlobalStyles dark={dark} />
@@ -139,6 +169,7 @@ const Index = () => {
             tasks={myTasks}
             inputChange={inputChange}
             addTask={addTask}
+            toggleImportance={toggleImportance}
           />
         ) : (
           <ConnectWallet connect={connectWallet} />

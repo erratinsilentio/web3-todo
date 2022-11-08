@@ -83,7 +83,12 @@ const Container = styled.div`
   }
 `;
 
-export default function TodoList({ inputChange, addTask, tasks }) {
+export default function TodoList({
+  inputChange,
+  addTask,
+  tasks,
+  toggleImportance,
+}) {
   return (
     <Container>
       <span>Welcome, Kacper!</span>
@@ -100,7 +105,7 @@ export default function TodoList({ inputChange, addTask, tasks }) {
       <section className="notepad">
         {tasks.map((task) =>
           task.taskText ? (
-            <Task key={task.id} task={task}>
+            <Task key={task.id} task={task} toggleImportance={toggleImportance}>
               {task.taskText}
             </Task>
           ) : null,

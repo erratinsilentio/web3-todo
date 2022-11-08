@@ -34,14 +34,20 @@ const Container = styled.div`
   }
 `;
 
-export default function Task({ task, children }) {
+export default function Task({ task, children, toggleImportance }) {
   return (
     <Container>
       <div className="task">{children}</div>
       {task.isImportant ? (
-        <MdNotificationImportant className="btn" />
+        <MdNotificationImportant
+          onClick={() => toggleImportance(task)}
+          className="btn"
+        />
       ) : (
-        <MdOutlineNotificationImportant className="btn" />
+        <MdOutlineNotificationImportant
+          onClick={() => toggleImportance(task)}
+          className="btn"
+        />
       )}
       <MdNotInterested className="btn" />
     </Container>
