@@ -146,11 +146,13 @@ const Index = () => {
 
         console.log('task received');
 
-        task.isImportant
-          ? await TaskContract.makeUnImportant(task.id, false)
-          : await TaskContract.makeImportant(task.id, true);
-
-        console.log('importance changed');
+        if (task.isImportant) {
+          await TaskContract.makeUnImportant(task.id, false);
+          console.log('◊ Task status switched to unimportant');
+        } else {
+          await TaskContract.makeImportant(task.id, true);
+          console.log('◊ Task status switched to important');
+        }
       }
 
       await getAllTasks();
