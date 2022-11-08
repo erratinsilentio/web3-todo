@@ -99,7 +99,11 @@ export default function TodoList({ inputChange, addTask, tasks }) {
       </section>
       <section className="notepad">
         {tasks.map((task) =>
-          task.taskText ? <Task key={task.id}>{task.taskText}</Task> : null,
+          task.taskText ? (
+            <Task key={task.id} task={task}>
+              {task.taskText}
+            </Task>
+          ) : null,
         )}
       </section>
     </Container>

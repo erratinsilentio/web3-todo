@@ -34,11 +34,15 @@ const Container = styled.div`
   }
 `;
 
-export default function Task({ children }) {
+export default function Task({ task, children }) {
   return (
     <Container>
       <div className="task">{children}</div>
-      <MdOutlineNotificationImportant className="btn" />
+      {task.isImportant ? (
+        <MdNotificationImportant className="btn" />
+      ) : (
+        <MdOutlineNotificationImportant className="btn" />
+      )}
       <MdNotInterested className="btn" />
     </Container>
   );
