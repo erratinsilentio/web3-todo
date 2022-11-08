@@ -57,6 +57,8 @@ export interface TaskContractInterface extends utils.Interface {
     "clearTasks()": FunctionFragment;
     "deleteTask(uint256)": FunctionFragment;
     "getMyTasks()": FunctionFragment;
+    "makeImportant(uint256,bool)": FunctionFragment;
+    "makeUnImportant(uint256,bool)": FunctionFragment;
     "toggleDone(uint256,bool)": FunctionFragment;
   };
 
@@ -66,6 +68,8 @@ export interface TaskContractInterface extends utils.Interface {
       | "clearTasks"
       | "deleteTask"
       | "getMyTasks"
+      | "makeImportant"
+      | "makeUnImportant"
       | "toggleDone"
   ): FunctionFragment;
 
@@ -86,6 +90,14 @@ export interface TaskContractInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "makeImportant",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "makeUnImportant",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "toggleDone",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
   ): string;
@@ -94,16 +106,28 @@ export interface TaskContractInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "clearTasks", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deleteTask", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getMyTasks", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "makeImportant",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "makeUnImportant",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "toggleDone", data: BytesLike): Result;
 
   events: {
     "AddTask(address,uint256)": EventFragment;
     "DeleteTask(uint256)": EventFragment;
+    "MakeImportant(uint256,bool)": EventFragment;
+    "MakeUnImportant(uint256,bool)": EventFragment;
     "ToggleDone(uint256,bool)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AddTask"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DeleteTask"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MakeImportant"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MakeUnImportant"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ToggleDone"): EventFragment;
 }
 
@@ -121,6 +145,28 @@ export interface DeleteTaskEventObject {
 export type DeleteTaskEvent = TypedEvent<[BigNumber], DeleteTaskEventObject>;
 
 export type DeleteTaskEventFilter = TypedEventFilter<DeleteTaskEvent>;
+
+export interface MakeImportantEventObject {
+  taskId: BigNumber;
+  isImportant: boolean;
+}
+export type MakeImportantEvent = TypedEvent<
+  [BigNumber, boolean],
+  MakeImportantEventObject
+>;
+
+export type MakeImportantEventFilter = TypedEventFilter<MakeImportantEvent>;
+
+export interface MakeUnImportantEventObject {
+  taskId: BigNumber;
+  isImportant: boolean;
+}
+export type MakeUnImportantEvent = TypedEvent<
+  [BigNumber, boolean],
+  MakeUnImportantEventObject
+>;
+
+export type MakeUnImportantEventFilter = TypedEventFilter<MakeUnImportantEvent>;
 
 export interface ToggleDoneEventObject {
   taskId: BigNumber;
@@ -178,6 +224,18 @@ export interface TaskContract extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[TaskContract.TaskStructOutput[]]>;
 
+    makeImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    makeUnImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     toggleDone(
       taskId: PromiseOrValue<BigNumberish>,
       isDone: PromiseOrValue<boolean>,
@@ -203,6 +261,18 @@ export interface TaskContract extends BaseContract {
     overrides?: CallOverrides
   ): Promise<TaskContract.TaskStructOutput[]>;
 
+  makeImportant(
+    taskId: PromiseOrValue<BigNumberish>,
+    isImportant: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  makeUnImportant(
+    taskId: PromiseOrValue<BigNumberish>,
+    isImportant: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   toggleDone(
     taskId: PromiseOrValue<BigNumberish>,
     isDone: PromiseOrValue<boolean>,
@@ -226,6 +296,18 @@ export interface TaskContract extends BaseContract {
       overrides?: CallOverrides
     ): Promise<TaskContract.TaskStructOutput[]>;
 
+    makeImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    makeUnImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     toggleDone(
       taskId: PromiseOrValue<BigNumberish>,
       isDone: PromiseOrValue<boolean>,
@@ -242,6 +324,21 @@ export interface TaskContract extends BaseContract {
 
     "DeleteTask(uint256)"(taskId?: null): DeleteTaskEventFilter;
     DeleteTask(taskId?: null): DeleteTaskEventFilter;
+
+    "MakeImportant(uint256,bool)"(
+      taskId?: null,
+      isImportant?: null
+    ): MakeImportantEventFilter;
+    MakeImportant(taskId?: null, isImportant?: null): MakeImportantEventFilter;
+
+    "MakeUnImportant(uint256,bool)"(
+      taskId?: null,
+      isImportant?: null
+    ): MakeUnImportantEventFilter;
+    MakeUnImportant(
+      taskId?: null,
+      isImportant?: null
+    ): MakeUnImportantEventFilter;
 
     "ToggleDone(uint256,bool)"(
       taskId?: null,
@@ -267,6 +364,18 @@ export interface TaskContract extends BaseContract {
 
     getMyTasks(overrides?: CallOverrides): Promise<BigNumber>;
 
+    makeImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    makeUnImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     toggleDone(
       taskId: PromiseOrValue<BigNumberish>,
       isDone: PromiseOrValue<boolean>,
@@ -290,6 +399,18 @@ export interface TaskContract extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getMyTasks(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    makeImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    makeUnImportant(
+      taskId: PromiseOrValue<BigNumberish>,
+      isImportant: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     toggleDone(
       taskId: PromiseOrValue<BigNumberish>,

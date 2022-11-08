@@ -7,6 +7,9 @@ contract TaskContract {
   event AddTask(address recipient, uint taskId);
   event DeleteTask(uint taskId);
   event ToggleDone(uint taskId, bool isDone);
+  event MakeImportant(uint taskId, bool isImportant);
+  event MakeUnImportant(uint taskId, bool isImportant);
+
 
   struct Task {
     uint id;
@@ -50,6 +53,20 @@ contract TaskContract {
     if(taskToOwner[taskId]==msg.sender){
       tasks[taskId].isDone = isDone;
       emit ToggleDone(taskId, isDone);
+    }
+  }
+
+    function makeImportant(uint taskId, bool isImportant) external {
+    if(taskToOwner[taskId]==msg.sender){
+      tasks[taskId].isImportant = isImportant;
+      emit MakeImportant(taskId, isImportant);
+    }
+  }
+
+    function makeUnImportant(uint taskId, bool isImportant) external {
+    if(taskToOwner[taskId]==msg.sender){
+      tasks[taskId].isImportant = isImportant;
+      emit MakeUnImportant(taskId, isImportant);
     }
   }
 
