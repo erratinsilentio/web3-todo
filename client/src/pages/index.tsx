@@ -22,15 +22,13 @@ const Index = () => {
   const [dark, setDark] = useState(true);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('');
-  const [tasks, setTasks] = useState([]);
-  const [update, setUpdate] = useState(true);
   const [myTasks, setMyTasks] = useState([]);
   const [input, setInput] = useState('');
 
   useEffect(() => {
     connectWallet();
     getAllTasks();
-  }, [update]);
+  }, []);
 
   const toggleMode = () => setDark(!dark);
 
@@ -73,8 +71,7 @@ const Index = () => {
         );
 
         let allTasks = await TaskContract.getMyTasks();
-        const res = await allTasks;
-        setMyTasks(res);
+        setMyTasks(allTasks);
         console.log('tasks:', allTasks);
       } else {
         console.log('◊ ERROR! Ethereum object does not exist!');
@@ -107,15 +104,9 @@ const Index = () => {
             /// UPDATE OUR STATE ///
             setMyTasks(myTasks.concat(task));
             console.log('◊ New task added!');
+
             /// REFETCH ALL TASKS AND TRIGGER DATA REFRESH ///
-            getAllTasks();
-            setTimeout(() => {
-              setUpdate(!update);
-            }, 15000);
-            getAllTasks().then((res) => console.log(res));
-          })
-          .then((res) => {
-            setUpdate(!update);
+            TaskContract.on('AddTask', getAllTasks);
           })
           .catch((err) => console.log(err));
       } else {
@@ -153,6 +144,9 @@ const Index = () => {
           await TaskContract.makeImportant(task.id, true);
           console.log('◊ Task status switched to important');
         }
+
+        TaskContract.on('MakeImportant', getAllTasks);
+        TaskContract.on('MakeUnImportant', getAllTasks);
       }
 
       await getAllTasks();
