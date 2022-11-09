@@ -58,16 +58,32 @@ const Container = styled.div`
       outline: 0px;
     }
   }
-  .add-note {
+  .add {
     width: 10%;
     height: 5vh;
+  }
+
+  .sort {
+    width: 30%;
+    height: 3vh;
+  }
+
+  .sort-bar {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .btn {
     border: 0.5px solid var(--peach);
     border-radius: 10px;
     background-color: transparent;
     color: var(--font);
     cursor: pointer;
+    transition-duration: 0.2s;
     &:hover {
-      background-color: var(--bg);
+      background-color: var(--peach);
     }
   }
 
@@ -86,10 +102,13 @@ const Container = styled.div`
 export default function TodoList({
   inputChange,
   addTask,
-  tasks,
+  taskState,
   toggleImportance,
   makeDone,
+  category,
+  switchCategory,
 }) {
+  let tasks = taskState[0];
   return (
     <Container>
       <span>Welcome, Kacper!</span>
@@ -99,12 +118,23 @@ export default function TodoList({
           placeholder="Your note..."
           onChange={() => inputChange(event)}
         ></input>
-        <button className="add-note" onClick={addTask}>
+        <button className="add btn" onClick={addTask}>
           +
         </button>
       </section>
+      <section className="sort-bar">
+        <button className="sort btn" onClick={() => switchCategory(0)}>
+          All
+        </button>
+        <button className="sort btn" onClick={() => switchCategory(1)}>
+          Important
+        </button>
+        <button className="sort btn" onClick={() => switchCategory(2)}>
+          Unimportant
+        </button>
+      </section>
       <section className="notepad">
-        {tasks.map((task) =>
+        {taskState[category].map((task) =>
           task.taskText ? (
             <Task
               key={task.id}

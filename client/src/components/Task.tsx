@@ -25,7 +25,7 @@ const Container = styled.div`
     overflow: hidden;
   }
 
-  .btn {
+  .btns {
     height: 5vh;
     width: 5vh;
     color: var(--peach);
@@ -52,19 +52,19 @@ export default function Task({ task, children, toggleImportance, makeDone }) {
       {task.isImportant ? (
         <MdNotificationImportant
           onClick={() => toggleImportance(task)}
-          className="btn"
+          className="btns"
         />
       ) : (
         <MdOutlineNotificationImportant
           onClick={() => toggleImportance(task)}
-          className="btn"
+          className="btns"
         />
       )}
       <MdNotInterested
         onClick={() => {
           makeDone(task);
         }}
-        className="btn"
+        className="btns"
       />
     </Container>
   );

@@ -23,7 +23,12 @@ const Index = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('');
   const [myTasks, setMyTasks] = useState([]);
+  const [myTasksImp, setMyTasksImp] = useState([]);
+  const [myTasksUnImp, setMyTasksUnImp] = useState([]);
   const [input, setInput] = useState('');
+  const [category, setCategory] = useState(0);
+
+  let taskState = [myTasks, myTasksImp, myTasksUnImp];
 
   useEffect(() => {
     connectWallet();
@@ -71,7 +76,11 @@ const Index = () => {
         );
 
         let allTasks = await TaskContract.getMyTasks();
+        let imp = allTasks.filter((task) => task.isImportant);
+        let unImp = allTasks.filter((task) => !task.isImportant);
         setMyTasks(allTasks);
+        setMyTasksImp(imp);
+        setMyTasksUnImp(unImp);
         console.log('tasks:', allTasks);
       } else {
         console.log('◊ ERROR! Ethereum object does not exist!');
@@ -177,6 +186,10 @@ const Index = () => {
     }
   };
 
+  const switchCategory = (category) => {
+    setCategory(category);
+  };
+
   return (
     <>
       <GlobalStyles dark={dark} />
@@ -184,11 +197,13 @@ const Index = () => {
         <ToggleMode mode={dark} toggle={toggleMode} />
         {isUserLoggedIn ? (
           <TodoList
-            tasks={myTasks}
+            taskState={taskState}
             inputChange={inputChange}
             addTask={addTask}
             toggleImportance={toggleImportance}
             makeDone={makeDone}
+            category={category}
+            switchCategory={switchCategory}
           />
         ) : (
           <ConnectWallet connect={connectWallet} />
