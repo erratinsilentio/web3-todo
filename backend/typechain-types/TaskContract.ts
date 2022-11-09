@@ -119,6 +119,7 @@ export interface TaskContractInterface extends utils.Interface {
   events: {
     "AddTask(address,uint256)": EventFragment;
     "DeleteTask(uint256)": EventFragment;
+    "GetMyTasks()": EventFragment;
     "MakeImportant(uint256,bool)": EventFragment;
     "MakeUnImportant(uint256,bool)": EventFragment;
     "ToggleDone(uint256,bool)": EventFragment;
@@ -126,6 +127,7 @@ export interface TaskContractInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "AddTask"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DeleteTask"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GetMyTasks"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MakeImportant"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MakeUnImportant"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ToggleDone"): EventFragment;
@@ -145,6 +147,11 @@ export interface DeleteTaskEventObject {
 export type DeleteTaskEvent = TypedEvent<[BigNumber], DeleteTaskEventObject>;
 
 export type DeleteTaskEventFilter = TypedEventFilter<DeleteTaskEvent>;
+
+export interface GetMyTasksEventObject {}
+export type GetMyTasksEvent = TypedEvent<[], GetMyTasksEventObject>;
+
+export type GetMyTasksEventFilter = TypedEventFilter<GetMyTasksEvent>;
 
 export interface MakeImportantEventObject {
   taskId: BigNumber;
@@ -324,6 +331,9 @@ export interface TaskContract extends BaseContract {
 
     "DeleteTask(uint256)"(taskId?: null): DeleteTaskEventFilter;
     DeleteTask(taskId?: null): DeleteTaskEventFilter;
+
+    "GetMyTasks()"(): GetMyTasksEventFilter;
+    GetMyTasks(): GetMyTasksEventFilter;
 
     "MakeImportant(uint256,bool)"(
       taskId?: null,

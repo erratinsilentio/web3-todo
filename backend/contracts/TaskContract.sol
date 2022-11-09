@@ -4,6 +4,7 @@ import "hardhat/console.sol";
 
 
 contract TaskContract {
+  event GetMyTasks();
   event AddTask(address recipient, uint taskId);
   event DeleteTask(uint taskId);
   event ToggleDone(uint taskId, bool isDone);
