@@ -104,6 +104,7 @@ const Container = styled.div`
 
 export default function TodoList({
   inputChange,
+  input,
   addTask,
   taskState,
   toggleImportance,
@@ -119,6 +120,7 @@ export default function TodoList({
         <input
           placeholder="Your note..."
           onChange={() => inputChange(event)}
+          value={input}
         ></input>
         <button className="add btn" onClick={addTask}>
           +

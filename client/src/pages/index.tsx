@@ -219,6 +219,7 @@ const Index = () => {
           <TodoList
             taskState={taskState}
             inputChange={inputChange}
+            input={input}
             addTask={addTask}
             toggleImportance={toggleImportance}
             makeDone={makeDone}
