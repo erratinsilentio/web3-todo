@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import Task from './Task';
 
@@ -87,6 +86,10 @@ const Container = styled.div`
     }
   }
 
+  .chosen {
+    background-color: var(--peach);
+  }
+
   .notepad {
     margin-top: 10px;
     width: 100%;
@@ -108,7 +111,6 @@ export default function TodoList({
   category,
   switchCategory,
 }) {
-  let tasks = taskState[0];
   return (
     <Container>
       <span>Welcome, Kacper!</span>
@@ -123,13 +125,22 @@ export default function TodoList({
         </button>
       </section>
       <section className="sort-bar">
-        <button className="sort btn" onClick={() => switchCategory(0)}>
+        <button
+          className={category == 0 ? 'sort btn chosen' : 'sort btn'}
+          onClick={() => switchCategory(0)}
+        >
           All
         </button>
-        <button className="sort btn" onClick={() => switchCategory(1)}>
+        <button
+          className={category == 1 ? 'sort btn chosen' : 'sort btn'}
+          onClick={() => switchCategory(1)}
+        >
           Important
         </button>
-        <button className="sort btn" onClick={() => switchCategory(2)}>
+        <button
+          className={category == 2 ? 'sort btn chosen' : 'sort btn'}
+          onClick={() => switchCategory(2)}
+        >
           Unimportant
         </button>
       </section>

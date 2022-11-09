@@ -20,6 +20,7 @@ const MainStyles = styled.div`
 
 const Index = () => {
   const [dark, setDark] = useState(true);
+  const [correctNetwork, setCorrectNetwork] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('');
   const [myTasks, setMyTasks] = useState([]);
@@ -27,8 +28,9 @@ const Index = () => {
   const [myTasksUnImp, setMyTasksUnImp] = useState([]);
   const [input, setInput] = useState('');
   const [category, setCategory] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  let taskState = [myTasks, myTasksImp, myTasksUnImp];
+  const taskState = [myTasks, myTasksImp, myTasksUnImp];
 
   useEffect(() => {
     connectWallet();
@@ -49,6 +51,17 @@ const Index = () => {
       let chainId = await ethereum.request({ method: 'eth_chainId' });
       console.log(`◊ connected to chain: ${chainId}`);
 
+      const GOERLI_CHAINID = '0x5';
+
+      if (chainId !== GOERLI_CHAINID) {
+        alert('ERROR! Seems you are not connected to Goerli Testnet :(');
+        setCorrectNetwork(false);
+        return;
+      } else {
+        setCorrectNetwork(true);
+        console.log('◊ Welcome on Goerli Testnet!');
+      }
+
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts',
       });
@@ -63,6 +76,9 @@ const Index = () => {
 
   const getAllTasks = async () => {
     try {
+      setIsLoading(true);
+      console.log('◊ Updating tasks...');
+
       const { ethereum } = window;
 
       if (ethereum) {
@@ -79,6 +95,10 @@ const Index = () => {
         let imp = allTasks.filter((task) => task.isImportant);
         let unImp = allTasks.filter((task) => !task.isImportant);
         setMyTasks(allTasks);
+
+        // setIsLoading(false);
+        // console.log(isLoading ? '◊ loading...' : '◊ Update completed!');
+
         setMyTasksImp(imp);
         setMyTasksUnImp(unImp);
         console.log('tasks:', allTasks);
@@ -113,6 +133,9 @@ const Index = () => {
             /// UPDATE OUR STATE ///
             setMyTasks(myTasks.concat(task));
             console.log('◊ New task added!');
+
+            /// RESET INPUT ///
+            setInput('');
 
             /// REFETCH ALL TASKS AND TRIGGER DATA REFRESH ///
             TaskContract.on('AddTask', getAllTasks);
