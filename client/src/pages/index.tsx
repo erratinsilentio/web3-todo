@@ -4,9 +4,11 @@ import TodoList from '@/components/TodoList';
 import ToggleMode from '@/components/ToggleMode';
 import { GlobalStyles } from '@/styles/GlobalStyles';
 import TaskAbi from '../../../backend/artifacts/contracts/TaskContract.sol/TaskContract.json';
-import { taskContractAdress } from '../utils/config';
+import { GOERLI_CHAINID, taskContractAdress } from '../utils/config';
 import { ethers } from 'ethers';
 import ConnectWallet from '@/components/ConnectWallet';
+import WrongNetwork from '@/components/WrongNetwork';
+import ErrorMessage from '@/utils/ErrorMessage';
 
 const MainStyles = styled.div`
   background-color: var(--bg);
@@ -28,7 +30,6 @@ const Index = () => {
   const [myTasksUnImp, setMyTasksUnImp] = useState([]);
   const [input, setInput] = useState('');
   const [category, setCategory] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
 
   const taskState = [myTasks, myTasksImp, myTasksUnImp];
 
@@ -51,8 +52,6 @@ const Index = () => {
       let chainId = await ethereum.request({ method: 'eth_chainId' });
       console.log(`◊ connected to chain: ${chainId}`);
 
-      const GOERLI_CHAINID = '0x5';
-
       if (chainId !== GOERLI_CHAINID) {
         alert('ERROR! Seems you are not connected to Goerli Testnet :(');
         setCorrectNetwork(false);
@@ -66,7 +65,7 @@ const Index = () => {
         method: 'eth_requestAccounts',
       });
 
-      console.log(`◊ found account: ${accounts[0]}`);
+      console.log(`◊ Your account: ${accounts[0]}`);
       setIsUserLoggedIn(true);
       setCurrentAccount(accounts[0]);
     } catch (error) {
@@ -76,7 +75,6 @@ const Index = () => {
 
   const getAllTasks = async () => {
     try {
-      setIsLoading(true);
       console.log('◊ Updating tasks...');
 
       const { ethereum } = window;
@@ -94,13 +92,11 @@ const Index = () => {
         let allTasks = await TaskContract.getMyTasks();
         let imp = allTasks.filter((task) => task.isImportant);
         let unImp = allTasks.filter((task) => !task.isImportant);
+
         setMyTasks(allTasks);
-
-        // setIsLoading(false);
-        // console.log(isLoading ? '◊ loading...' : '◊ Update completed!');
-
         setMyTasksImp(imp);
         setMyTasksUnImp(unImp);
+
         console.log('tasks:', allTasks);
       } else {
         console.log('◊ ERROR! Ethereum object does not exist!');
@@ -218,6 +214,7 @@ const Index = () => {
       <GlobalStyles dark={dark} />
       <MainStyles>
         <ToggleMode mode={dark} toggle={toggleMode} />
+
         {isUserLoggedIn ? (
           <TodoList
             taskState={taskState}
