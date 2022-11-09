@@ -88,6 +88,7 @@ export default function TodoList({
   addTask,
   tasks,
   toggleImportance,
+  makeDone,
 }) {
   return (
     <Container>
@@ -105,7 +106,12 @@ export default function TodoList({
       <section className="notepad">
         {tasks.map((task) =>
           task.taskText ? (
-            <Task key={task.id} task={task} toggleImportance={toggleImportance}>
+            <Task
+              key={task.id}
+              task={task}
+              toggleImportance={toggleImportance}
+              makeDone={makeDone}
+            >
               {task.taskText}
             </Task>
           ) : null,

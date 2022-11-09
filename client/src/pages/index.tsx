@@ -155,6 +155,28 @@ const Index = () => {
     }
   };
 
+  const makeDone = async (task) => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        const TaskContract = new ethers.Contract(
+          taskContractAdress,
+          TaskAbi.abi,
+          signer,
+        );
+
+        TaskContract.toggleDone(task.id, true);
+        TaskContract.on('ToggleDone', getAllTasks);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <GlobalStyles dark={dark} />
@@ -166,6 +188,7 @@ const Index = () => {
             inputChange={inputChange}
             addTask={addTask}
             toggleImportance={toggleImportance}
+            makeDone={makeDone}
           />
         ) : (
           <ConnectWallet connect={connectWallet} />
