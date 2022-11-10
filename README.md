@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
+ <img width=200px height=200px src="https://media.giphy.com/media/v0u7eU0nSmOJ0hGf6n/giphy.gif?cid=ecf05e47473qk08kk12osa92292ajksfnnjtja5ghfwf17nv&rid=giphy.gif&ct=g" alt="Project logo"></a>
 </p>
 
 <h3 align="center">WEB3 TODO APP</h3>
@@ -8,8 +8,6 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
@@ -44,9 +42,7 @@ You will need a working computer, IDE like VSCode, and internet connection:)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
+Clone repository on your computer:
 
 ```
 git clone https://github.com/erratinsilentio/web3-todo.git
@@ -80,7 +76,13 @@ If tests do not run properly, make sure you have all the dependencies installed 
 
 ## 🎈 Usage <a name="usage"></a>
 
-At the start of an application, you should see a connect button. If you are connected to Goerli Testnet, you can connect your MetaMask wallet by clicking the button. The will be an error if you are on another network. After logging in with your wallet, you are able to add new notes. It will take about 15-20 second for the data to be updated. You also have the ability to switch notes important status, or simply delete them.
+- At the start of an application, you should see a connect button.
+
+- If you are connected to Goerli Testnet, you will be able to connect your MetaMask wallet by clicking the button. There will be an error if you are on another network.
+
+- After logging in with your wallet, you are able to add new notes. It will take about 15-20 second for the data to be updated.
+
+- You also have the ability to switch notes important status, or simply delete them.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
@@ -93,11 +95,10 @@ At the start of an application, you should see a connect button. If you are conn
 
 - [@erratinsilentio](https://github.com/erratinsilentio) - Idea & Initial work
 
-Project inspired by @Clever Programmer Youtube tutorial:
-https://youtu.be/awQTDVvYyjI
+Project inspired by @Clever_Programmer <a href="https://youtu.be/awQTDVvYyjI>Youtube tutorial</a>
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- Obviusly to Clever_Programmer, for making a great tutorial, and other people giving out fantastic Web3 content for free!
+- For anyone checking out my project!
+- And thanks to my girlfriend, for being patient with me sitting in front of the screen for probably too long sometimes:)
