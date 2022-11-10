@@ -27,6 +27,7 @@
 - [Built Using](#built_using)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
+- [Screenshots](#screens)
 
 ## 🧐 About <a name = "about"></a>
 
@@ -93,12 +94,16 @@ If tests do not run properly, make sure you have all the dependencies installed 
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@erratinsilentio](https://github.com/erratinsilentio) - Idea & Initial work
+- [@erratinsilentio](https://github.com/erratinsilentio) - aka myself
 
-Project inspired by @Clever_Programmer <a href="https://youtu.be/awQTDVvYyjI>Youtube tutorial</a>
+Project inspired by @Clever_Programmer <a href="https://youtu.be/awQTDVvYyjI">Youtube tutorial</a>
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
 - Obviusly to Clever_Programmer, for making a great tutorial, and other people giving out fantastic Web3 content for free!
 - For anyone checking out my project!
 - And thanks to my girlfriend, for being patient with me sitting in front of the screen for probably too long sometimes:)
+
+## Screenshots <a name = "screens"></a>
+
+<img src="https://res.cloudinary.com/dlj4gyfwy/image/upload/v1668036378/Zrzut_ekranu_2022-11-10_o_00.24.05_vjizfv.png"/>
